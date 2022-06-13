@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import toast from "react-hot-toast";
 import { v4 as uuid } from "uuid";
 import { addJob } from "../slices/jobSlice";
 import { Button, Form, Row, Col } from "react-bootstrap";
+import { AiFillAlert } from "react-icons/ai";
 
 function ListAdd() {
   const dispatch = useDispatch();
@@ -17,8 +17,8 @@ function ListAdd() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title === "" || status==="" || status==null) {
-        alert("plase enter title or select status")
+    if (title === "" || status === "" || status == null) {
+      alert("plase enter title or select status");
       return;
     }
     if (title && status) {
@@ -30,7 +30,7 @@ function ListAdd() {
           time: new Date().toLocaleString(),
         })
       );
-      toast.success("Job added successfully");
+      alert("Job added successfully");
     }
   };
 
@@ -41,13 +41,15 @@ function ListAdd() {
           <Form.Label htmlFor="title">
             Create Job
             <input
+              //pattern="[a-zA-Z0-9]+"? regex?
               type="text"
               id="title"
+              maxLength="255"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value.match("^[a-zA-Z0-9]+$"))}
             />
           </Form.Label>
-        </Col>       
+        </Col>
 
         <Col>
           <Form.Select
@@ -67,7 +69,6 @@ function ListAdd() {
             Create Job +
           </Button>
         </Col>
-        
       </Row>
     </Form>
   );

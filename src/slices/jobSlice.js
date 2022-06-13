@@ -12,9 +12,11 @@ const getInitialJob = () => {
 
 const initialValue = {
   filterStatus: "all",
+  filterText: null,
   jobList: getInitialJob(),
 };
 
+//crud and find
 export const jobSlice = createSlice({
   name: "job",
   initialState: initialValue,
@@ -45,7 +47,7 @@ export const jobSlice = createSlice({
         const jobListArr = JSON.parse(jobList);
         jobListArr.forEach((job) => {
           if (job.id === action.payload.id) {
-            job.status = action.payload.status;
+            job.status = action.payload.status; // just status
             //job.title = action.payload.title;
           }
         });
@@ -69,9 +71,17 @@ export const jobSlice = createSlice({
     updateFilterStatus: (state, action) => {
       state.filterStatus = action.payload;
     },
+    updateFilterText: (state, action) => {
+      state.filterText = action.payload;
+    },
   },
 });
 
-export const { addJob, updateJob, deleteJob, updateFilterStatus } =
-  jobSlice.actions;
+export const {
+  addJob,
+  updateJob,
+  deleteJob,
+  updateFilterStatus,
+  updateFilterText,
+} = jobSlice.actions;
 export default jobSlice.reducer;
