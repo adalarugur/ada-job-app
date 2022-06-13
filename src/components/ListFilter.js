@@ -14,7 +14,6 @@ function ListFilter() {
   const dispatch = useDispatch();
 
   const updateFilter = (e,type) => {
-      debugger;
     
     if(type==="selectType"){
         setFilterStatus(e.target.value);
