@@ -12,7 +12,7 @@ const getInitialJob = () => {
 
 const initialValue = {
   filterStatus: "all",
-  filterText: null,
+  filterText: "",
   jobList: getInitialJob(),
 };
 
@@ -42,13 +42,13 @@ export const jobSlice = createSlice({
       }
     },
     updateJob: (state, action) => {
+      debugger;
       const jobList = window.localStorage.getItem("jobList");
       if (jobList) {
         const jobListArr = JSON.parse(jobList);
         jobListArr.forEach((job) => {
           if (job.id === action.payload.id) {
-            job.status = action.payload.status; // just status
-            //job.title = action.payload.title;
+            job.status = action.payload.updateStatus;
           }
         });
         window.localStorage.setItem("jobList", JSON.stringify(jobListArr));
@@ -72,7 +72,15 @@ export const jobSlice = createSlice({
       state.filterStatus = action.payload;
     },
     updateFilterText: (state, action) => {
-      state.filterText = action.payload;
+      //state.filterText = action.payload;
+      /*debugger;
+      const filterJobs = state.jobList.filter((job) =>
+        job.title.toLowerCase().includes(action.payload.toLowerCase())
+      );
+      return {
+        ...state,
+        filterText: action.payload.length > 0 ? filterJobs : [...state.job],
+      };*/
     },
   },
 });
