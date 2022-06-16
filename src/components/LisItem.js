@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ListGroupItem, Button, Container, Modal, Form } from "react-bootstrap";
+import {  ListGroupItem, Button, Modal, Form} from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 import { deleteJob, updateJob } from "../slices/jobSlice";
 import { getClasses } from "../util/getClasses";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
-import UpdateModal from "./UpdateModal"; //parent child bootsrap modal problem?
+//parent child bootsrap modal problem?
 
 function LisItem({ job }) {
   const dispatch = useDispatch();
@@ -16,15 +16,15 @@ function LisItem({ job }) {
 
   const handleDelete = () => {
     confirmAlert({
-      title: "Job  Delete Screen",
+      title: "Are you sure you want delete it?",
       message: "Job" + job.title + " is delete?",
       buttons: [
         {
-          label: "Yes",
+          label: "Approve",
           onClick: () => dispatch(deleteJob(job.id)),
         },
         {
-          label: "No",
+          label: "Cancel",
           onClick: () => alert("Click No"),
         },
       ],
@@ -42,7 +42,7 @@ function LisItem({ job }) {
   const handleUpdateStatus = () => {
     if (job.status !== updateStatus) {
       dispatch(updateJob({ ...job, updateStatus }));
-      alert("job Updated successfully");
+      confirmAlert({ message: job.title + " priority updated" });
     } else {
       alert("No changes made");
       return;
@@ -70,26 +70,32 @@ function LisItem({ job }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Update Job Status : {job.title}</Modal.Title>
+          <Modal.Title>Job Edit</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Select Job Status</Modal.Body>
-        <Form.Select
-          id="status"
-          onChange={(e) => setUpdateStatus(e.target.value)}
-          value={updateStatus}
-          defaultValue={job.status}
-        >
-          <option>Select Status</option>
-          <option value="urgent">Urgent</option>
-          <option value="regular">Regular</option>
-          <option value="trivial">Trivial</option>
-        </Form.Select>
+        <Modal.Body>
+          <Form.Label htmlFor="disabledTextInput">Job Name</Form.Label>
+          <Form.Control type="text" placeholder={job.title} disabled readOnly />
+
+          <Form.Label>Job Priority</Form.Label>
+          <Form.Select
+            id="status"
+            onChange={(e) => setUpdateStatus(e.target.value)}
+            value={updateStatus}
+            defaultValue={job.status}
+          >
+            <option>Select Status</option>
+            <option value="urgent">Urgent</option>
+            <option value="regular">Regular</option>
+            <option value="trivial">Trivial</option>
+          </Form.Select>
+        </Modal.Body>
+
         <Modal.Footer>
           <Button onClick={handleClose} variant="secondary">
-            Close
+            Cancel
           </Button>
-          <Button onClick={handleUpdateStatus} variant="primary">
-            Update Status
+          <Button onClick={handleUpdateStatus} variant="danger">
+            Save
           </Button>
         </Modal.Footer>
       </Modal>

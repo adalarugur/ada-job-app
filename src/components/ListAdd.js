@@ -9,28 +9,21 @@ function ListAdd() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
-  const options = [
-    {
-      label:"Status"
-    },
-    {
-      label: "Urgent",
-      value: "urgent",
-      sno:1
-    },
-    {
-      label: "Regular",
-      value: "regular",
-      sno:2
-    },
-    {
-      label: "Trivial",
-      value: "trivial",
-      sno:3
-    },
-  ];
+  const [stList, setStList] = useState([]);
+  const options = stList;
 
   useEffect(() => {
+    debugger; //todo json status list
+    fetch("http://localhost:4000/status")
+    .then(res => res.json())
+    .then(
+      (result) => {
+        setStList(result);
+      },
+           (error) => {
+        alert(error);
+      }
+    )
     setTitle("");
     setStatus("");
   }, []);
