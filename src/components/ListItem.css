@@ -1,0 +1,17 @@
+.urgent {
+    color: white;
+    background-color: #f6006a;
+    
+  }
+
+.regular {
+    color: white;
+    background-color: #f4b010;
+   
+  }
+
+.trivial {
+    color: white;
+    background-color: #4357e4;
+   
+}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {  ListGroupItem, Button, Modal, Form} from "react-bootstrap";
+import { ListGroupItem, Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { confirmAlert } from "react-confirm-alert";
 import { deleteJob, updateJob } from "../slices/jobSlice";
 import { getClasses } from "../util/getClasses";
 import { AiOutlineEdit, AiFillDelete } from "react-icons/ai";
+import "./ListItem.css";
 //parent child bootsrap modal problem?
 
 function LisItem({ job }) {
@@ -31,11 +32,11 @@ function LisItem({ job }) {
     });
   };
 
-  const handleUpdate = () => {
+  const handleModalOpen = () => {
     setShow(true);
   };
 
-  const handleClose = () => {
+  const handleModalClose = () => {
     setShow(false);
   };
 
@@ -52,23 +53,29 @@ function LisItem({ job }) {
   return (
     <>
       <div>
-        <ListGroupItem style={{ alignItems: "flex" }} as="li">
-          <p> {job.title} </p>
-          <p //to do ternary status colour control or state control?
-          >
-            {job.status}
-          </p>
-
-          <Button variant="secondary">
-            <AiOutlineEdit onClick={() => handleUpdate()}></AiOutlineEdit>
-          </Button>
-          <Button onClick={() => handleDelete(job)} variant="danger">
-            <AiFillDelete></AiFillDelete>
-          </Button>
+        <ListGroupItem style={{ alignItems: "flex-start" }} as="li">        
+          <Row>
+            <Col><p>{job.title}</p></Col>
+            <Col>
+              <button disabled className={job.status}>
+                {job.status.toUpperCase()}{" "}
+              </button>
+            </Col>
+            <Col>
+              <Button variant="secondary">
+                <AiOutlineEdit
+                  onClick={() => handleModalOpen()}
+                ></AiOutlineEdit>
+              </Button>
+              <Button onClick={() => handleDelete(job)} variant="danger">
+                <AiFillDelete></AiFillDelete>
+              </Button>
+            </Col>
+          </Row>
         </ListGroupItem>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleModalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Job Edit</Modal.Title>
         </Modal.Header>
@@ -91,7 +98,7 @@ function LisItem({ job }) {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={handleClose} variant="secondary">
+          <Button onClick={handleModalClose} variant="secondary">
             Cancel
           </Button>
           <Button onClick={handleUpdateStatus} variant="danger">

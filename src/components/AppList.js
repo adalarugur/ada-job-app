@@ -11,7 +11,7 @@ function AppList() {
   const filterText = useSelector((state) => state.job.filterText); 
 
   const sortedJobList = [...jobList];
-  debugger;
+  
   sortedJobList.sort(sortedJobList.status);
   const filteredJobList = sortedJobList.filter((item) => {   
     //todo dynamic text input filter
@@ -37,14 +37,7 @@ function AppList() {
       </ListGroup>
     </div>
 
-    /*
-    <div>
-      {filteredJobList && filteredJobList.length > 0 ? (
-        filteredJobList.map((job) => <LisItem key={job.id} job={job} />)
-      ) : (
-        <p>not jobs</p>
-      )}
-      </div> */
+ 
   );
 }
 

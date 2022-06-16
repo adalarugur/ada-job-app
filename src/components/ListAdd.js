@@ -13,17 +13,17 @@ function ListAdd() {
   const options = stList;
 
   useEffect(() => {
-    debugger; //todo json status list
+    //todo json status list
     fetch("http://localhost:4000/status")
-    .then(res => res.json())
-    .then(
-      (result) => {
-        setStList(result);
-      },
-           (error) => {
-        alert(error);
-      }
-    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setStList(result);
+        },
+        (error) => {
+          alert(error);
+        }
+      );
     setTitle("");
     setStatus("");
   }, []);
@@ -35,12 +35,11 @@ function ListAdd() {
       return;
     }
     if (title && status) {
-
       dispatch(
         addJob({
           id: uuid(),
-          title:title.match(("^[a-zA-Z0-9 '/s']*$")), //regex alphanum. and space allow if control? 
-          status,          
+          title,
+          status,
           time: new Date().toLocaleString(),
         })
       );
@@ -63,8 +62,8 @@ function ListAdd() {
                 id="title"
                 maxLength="255"
                 value={title}
-                onChange={(e) =>
-                setTitle(e.target.value)  //to do custom hook validation control?
+                onChange={
+                  (e) => setTitle(e.target.value.match("^[a-zA-Z0-9 '/s']*$")) //regex to do custom hook validation control?
                 }
               />
             </Col>
@@ -78,7 +77,7 @@ function ListAdd() {
             value={status}
           >
             {options.map((option) => (
-              <option  value={option.value}>{option.label}</option>
+              <option value={option.value}>{option.label}</option>
             ))}
           </Form.Select>
         </Col>
