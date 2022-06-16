@@ -8,10 +8,11 @@ import ListFilter from "./ListFilter";
 function AppList() {
   const jobList = useSelector((state) => state.job.jobList);
   const filterStatus = useSelector((state) => state.job.filterStatus);
-  const filterText = useSelector((state) => state.job.filterText);
+  const filterText = useSelector((state) => state.job.filterText); 
 
   const sortedJobList = [...jobList];
-  sortedJobList.sort((a, b) => b.status < a.status);
+  debugger;
+  sortedJobList.sort(sortedJobList.status);
   const filteredJobList = sortedJobList.filter((item) => {   
     //todo dynamic text input filter
 

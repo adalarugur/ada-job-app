@@ -9,6 +9,26 @@ function ListAdd() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
+  const options = [
+    {
+      label:"Status"
+    },
+    {
+      label: "Urgent",
+      value: "urgent",
+      sno:1
+    },
+    {
+      label: "Regular",
+      value: "regular",
+      sno:2
+    },
+    {
+      label: "Trivial",
+      value: "trivial",
+      sno:3
+    },
+  ];
 
   useEffect(() => {
     setTitle("");
@@ -22,11 +42,12 @@ function ListAdd() {
       return;
     }
     if (title && status) {
+
       dispatch(
         addJob({
           id: uuid(),
-          title,
-          status,
+          title:title.match(("^[a-zA-Z0-9 '/s']*$")), //regex alphanum. and space allow if control? 
+          status,          
           time: new Date().toLocaleString(),
         })
       );
@@ -38,17 +59,23 @@ function ListAdd() {
     <Form>
       <Row>
         <Col>
-          <Form.Label htmlFor="title">
-            Create Job
-            <input
-              //pattern="[a-zA-Z0-9]+"? regex?
-              type="text"
-              id="title"
-              maxLength="255"
-              value={title}
-              onChange={(e) => setTitle(e.target.value.match("^[a-zA-Z0-9]+$"))}
-            />
-          </Form.Label>
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label column sm="2">
+              Create Job
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                //pattern="[a-zA-Z0-9]+"? regex?
+                type="text"
+                id="title"
+                maxLength="255"
+                value={title}
+                onChange={(e) =>
+                setTitle(e.target.value)  //to do custom hook validation control?
+                }
+              />
+            </Col>
+          </Form.Group>
         </Col>
 
         <Col>
@@ -57,10 +84,9 @@ function ListAdd() {
             onChange={(e) => setStatus(e.target.value)}
             value={status}
           >
-            <option>Select Status</option>
-            <option value="urgent">Urgent</option>
-            <option value="regular">Regular</option>
-            <option value="trivial">Trivial</option>
+            {options.map((option) => (
+              <option  value={option.value}>{option.label}</option>
+            ))}
           </Form.Select>
         </Col>
 

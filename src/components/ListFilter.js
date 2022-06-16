@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Form, Row, Col } from "react-bootstrap";
 import { updateFilterStatus, updateFilterText } from "../slices/jobSlice";
 
@@ -13,27 +12,32 @@ function ListFilter() {
 
   const dispatch = useDispatch();
 
-  const updateFilter = (e,type) => {
-    
-    if(type==="selectType"){
-        setFilterStatus(e.target.value);
-        dispatch(updateFilterStatus(e.target.value));
-    }else if(type==="inputType"){
-        setFilterText(e.target.value);
-        dispatch(updateFilterText(e.target.value));
+  const updateFilter = (e, type) => {
+    if (type === "selectType") {
+      setFilterStatus(e.target.value);
+      dispatch(updateFilterStatus(e.target.value));
+    } else if (type === "inputType") {
+      setFilterText(e.target.value);
+      dispatch(updateFilterText(e.target.value));
     }
-    
   };
   return (
-    <Form >
+    <Form>
       <Row>
         <Col>
-          <input type="search" placeholder="search job" onChange={(e,type) => updateFilter(e,"inputType")} value={filterText} ></input>
+          <Form.Group as={Row} className="mb-3">
+            <Form.Control
+              type="search"
+              placeholder="search job"
+              onChange={(e, type) => updateFilter(e, "inputType")}
+              value={filterText}
+            />
+          </Form.Group>
         </Col>
         <Col>
           <Form.Select
             id="status"
-            onChange={(e,type) => updateFilter(e,"selectType")}
+            onChange={(e, type) => updateFilter(e, "selectType")}
             value={filterStatus}
           >
             <option value="all">All</option>
