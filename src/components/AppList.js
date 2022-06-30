@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LisItem from "./LisItem";
 import { useDispatch } from "react-redux";
@@ -9,13 +9,24 @@ function AppList() {
   const jobList = useSelector((state) => state.job.jobList);
   const filterStatus = useSelector((state) => state.job.filterStatus);
   const filterText = useSelector((state) => state.job.filterText); 
-
-  const sortedJobList = [...jobList];
+  const [searchedData,setSearchedData] = useState([]);
+    
+//refactor 
+  useEffect(() => {    
+    if(filterText === ""){
+      setSearchedData(jobList)      
+    }else{
+      setSearchedData(filterText)
+    }   
+      
+  }, [filterText])
   
-  sortedJobList.sort(sortedJobList.status);
+ const sortedJobList = searchedData;
+  
   const filteredJobList = sortedJobList.filter((item) => {   
     //todo dynamic text input filter
 
+    
     if (filterStatus === "all") {
       return true;
     }

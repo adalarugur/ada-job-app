@@ -73,7 +73,7 @@ function ListAdd() {
         <Col>
           <Form.Select
             id="status"
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) =>  setStatus(e.target.value)}
             value={status}
           >
             {options.map((option) => (

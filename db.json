@@ -1,6 +1,7 @@
  {"status" : [
     {
-      "label":"Status"
+      "label":"Status",
+      "id":0
     },
     {
       "label": "Urgent",
