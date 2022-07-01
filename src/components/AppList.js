@@ -20,13 +20,13 @@ function AppList() {
     }
   }, [jobList, filterText]);
 
-  const sortedJobList = searchedData;
+  const sortedJobList = [...searchedData];
 
-  /*if(sortedJobList !== null && sortedJobList.length>0) {
+  if(sortedJobList !== null && sortedJobList.length>0) {
   sortedJobList.sort((a, b) => {
-    return b.statusid - a.statusid;
+    return a.statusid - b.statusid;
   });
- }*/
+ }
   //array manipulation sorted?
 
   const filteredJobList = sortedJobList.filter((item) => {
