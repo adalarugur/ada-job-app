@@ -19,13 +19,20 @@ function AppList() {
       setSearchedData(filterText)
     }   
       
-  }, [filterText])
+  }, [jobList,filterText])
   
  const sortedJobList = searchedData;
+
+ /*if(sortedJobList !== null && sortedJobList.length>0) {
+  sortedJobList.sort((a, b) => {
+    return b.statusid - a.statusid;
+  });
+ }*/
+ 
   
   const filteredJobList = sortedJobList.filter((item) => {   
     //todo dynamic text input filter
-
+ 
     
     if (filterStatus === "all") {
       return true;

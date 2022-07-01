@@ -3,12 +3,12 @@ import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { addJob } from "../slices/jobSlice";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { AiFillAlert } from "react-icons/ai";
 
 function ListAdd() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
+  const [statusId, setStatusId] = useState(0);
   const [stList, setStList] = useState([]);
   const options = stList;
 
@@ -40,11 +40,24 @@ function ListAdd() {
           id: uuid(),
           title,
           status,
+          statusid:statusId,
           time: new Date().toLocaleString(),
         })
       );
       alert("Job added successfully");
     }
+  };
+
+  const onSelectStatus = (e) => {
+    //very bad code refactor!!!
+    if (e.target.value === "urgent") {
+      setStatusId(0);
+    } else if (e.target.value === "regular") {
+      setStatusId(1);
+    } else if (e.target.value === "trivial") {
+      setStatusId(2);
+    }
+    setStatus(e.target.value);
   };
 
   return (
@@ -73,11 +86,13 @@ function ListAdd() {
         <Col>
           <Form.Select
             id="status"
-            onChange={(e) =>  setStatus(e.target.value)}
+            onChange={(e) => onSelectStatus(e)}
             value={status}
           >
             {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
+              <option key={option.id} value={option.value}>
+                {option.label}
+              </option>
             ))}
           </Form.Select>
         </Col>
